@@ -7,7 +7,7 @@ const addTicketReducer = (initial = {}, action) => {
     switch (action.type) {
 
         case ADD_TICKET: {
-            const id = random(1000);
+            const id = action.payLoad.vehicle+random(1000);
             return {...initial, [id] : {...action.payLoad, id}} 
         }
         case COMPLETE_TICKET:  {

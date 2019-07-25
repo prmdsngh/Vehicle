@@ -8,14 +8,12 @@ const getSeatData = (group=" ", start, range) => {
     return data;
 }
 const seatAvailability = {
-    '1A' : getSeatData('1A', 0, 11),
+    '1A' : getSeatData('1A', 1, 11),
     '2A' : getSeatData('2A', 11, 21),
     '3A' : getSeatData('3A', 21, 31),
 }
 
 export const slotAvailabilityReducer = (initial = seatAvailability , action) => {
-    debugger;
-    console.log(initial);
     switch (action.type) {
         case BOOK_SLOT:{
                 const {group, num} = action.payLoad;

@@ -3,6 +3,10 @@ import {Field, reduxForm} from 'redux-form';
 import {Link} from 'react-router-dom';
 import { Form } from 'semantic-ui-react';
 import {now} from 'lodash';
+import {connect} from 'react-redux';
+import {values, isEmpty, isUndefined} from 'lodash';
+
+let ticketList = [];
 
 const formHandler = ({input, label, meta}) =>{
   const getInput = () => {
@@ -29,33 +33,49 @@ const errorMessage = ({error, submitFailed/*touched*/}) => {
 }
 
 const TicketForm = props => {
-    const {onSubmit, btnText} = props;
+    const {onSubmit, btnText, tickets} = props;
  
-    
+    ticketList = tickets;
 
     const onFormSubmit = formData => {
         const timeStamp = now();
         onSubmit({...formData, timeStamp, status : 1});
     }
 
-    
     return(
         <div>
             <form className="ui form error" onSubmit={props.handleSubmit(onFormSubmit)}>
                 <Field
-                    name = "name" component={formHandler} label="Enter name"/>
+                    name = "name" 
+                    component={formHandler} 
+                    label="Enter name"/>
                 <Field
-                    name = "vehicle" component={formHandler} label="Vehicle name"/>
+                    name = "vehicle" 
+                    component={formHandler} 
+                    label="Vehicle registration no."
+                    validate={registrationValidator}/>
                 
                 <Link to='/' className="ui button red">cancel</Link>
                 <button className="ui button primary">{btnText}</button>
             </form>
         </div>
     )
+
+    
     
 }
-
-const validate = formData => {
+const registrationValidator = (value) => {
+    let error = "";
+    debugger;
+    if(!isEmpty(ticketList) || !isUndefined(ticketList)){
+        const isPresent = ticketList.includes(value);
+        if(isPresent === true){
+            error = "Vehicle Already Exists"
+        }
+    }
+    return error;
+}
+const validate = (formData) => {
     let error = {};
     if(!formData.name){
         error.name = "please enter a name"
@@ -66,6 +86,11 @@ const validate = formData => {
     return error;
 }
 
+const mapStateToProps = store => {
+    return {
+        tickets : values(store.active).map( ticket => ticket.vehicle),
+    }
+}
 export default reduxForm({
         form : 'TicketForm', validate
-    })(TicketForm);
+    })(connect(mapStateToProps)(TicketForm));
