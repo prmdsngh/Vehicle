@@ -3,24 +3,22 @@ import TicketForm from '../../common/Ticket-Form';
 import { Container } from 'semantic-ui-react';
 import { addTicketAction } from '../actions/Add-ticket-action';
 import {connect} from 'react-redux';
-import {values} from 'lodash';
 import { BookSlotAction } from '../../display-slot/actions/slot-action';
+import { totalSeats } from '../../../Utils/numConst';
 
 const CreateTicket = (props) => {
     const {slots, addTicketAction, BookSlotAction} = props;
 
     const onFormSubmitHandler = ( formValues ) => {
-        const groupList = values(slots);
-        for(let i = 0; i < groupList.length ; i++){
-            const groupSlot = values(groupList[i]);
-            for( let j = 0; j< groupSlot.length ; j++){
-                const slot = groupSlot[j];
-                const {status, group, num} = slot;
-                if(status === 1){
-                    BookSlotAction({group, num});
-                    addTicketAction({...formValues, slot, status});
-                    return;
-                }
+        
+        while (true) {
+            let value = Math.floor(Math.random() * (totalSeats -1))
+            const slot = slots[value];
+            const {status, num} = slot;
+            if(status === 1){
+                BookSlotAction({num});
+                addTicketAction({...formValues, slot, status});
+                return;
             }
         }
     }

@@ -9,10 +9,10 @@ const DisplaySlot = props => {
     return ( 
         <Container>
             <Segment inverted color='blue'>Slots</Segment>
-            <Grid celled>
-                {
-                    keys(slots).map(group => {
-                    return <DisplaySlotItem group={group} item={slots[group]} />
+            <Grid relaxed stretched>
+                {   
+                    keys(slots).map((slotId, i) => {
+                    return <DisplaySlotItem key = {`slot_${i}`} item={slots[slotId]} />
                     })
                 }
             </Grid>

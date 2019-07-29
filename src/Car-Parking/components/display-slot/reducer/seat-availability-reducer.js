@@ -1,27 +1,26 @@
 import { BOOK_SLOT, CANCEL_SLOT } from "../../../Utils/StringConst";
+import {totalSeats} from '../../../Utils/numConst';
 
-const getSeatData = (group=" ", start, range) => {
+const getSeatData = (start, range) => {
     let data = {};
     for(let num = start ; num < range ; num++){
-        data[num] = { num, group, id : num, status : 1}
+        data[num] = { num, id : num, status : 1}
     }
     return data;
 }
 const seatAvailability = {
-    '1A' : getSeatData('1A', 1, 11),
-    '2A' : getSeatData('2A', 11, 21),
-    '3A' : getSeatData('3A', 21, 31),
+    ...getSeatData( 1, totalSeats),
 }
 
 export const slotAvailabilityReducer = (initial = seatAvailability , action) => {
     switch (action.type) {
         case BOOK_SLOT:{
-                const {group, num} = action.payLoad;
-                return {...initial, [group] : {...initial[group], [num] : {...initial[group][num], status : 0}}}
+                const {num} = action.payLoad;
+                return {...initial, [num] : {...initial[num], status : 0}}
                 }
         case CANCEL_SLOT : {
-                const {group, num} = action.payLoad;
-                return {...initial, [group] : {...initial[group], [num] : {...initial[group][num], status : 1}}}
+                const {num} = action.payLoad;
+                return {...initial, [num] : {...initial[num], status : 1}}
                 }
         default: return initial;
     }

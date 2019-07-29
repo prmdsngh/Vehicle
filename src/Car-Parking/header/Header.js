@@ -64,13 +64,11 @@ const getSlotCount = slots => {
     let inactiveCount = 0;
 
     groups.forEach(key => {
-        const slotsGroup = values(slots[key]);
-        slotsGroup.forEach( slot => {
-            if(slot.status === 1)
+        
+            if(slots[key].status === 1)
             count++;
             else 
             inactiveCount++;
-        })
     })
     return {count, inactiveCount};
 }

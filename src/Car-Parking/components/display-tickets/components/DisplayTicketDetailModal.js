@@ -20,7 +20,7 @@ const DisplayTicketDetailModal = props => {
           )
     }
 
-    const {name, vehicle, id, timeStamp, slot : { group, num}, status} = props.ticket;
+    const {name, vehicle, id, timeStamp, slot : { num }, status} = props.ticket;
     const date = (new Date(timeStamp));
     debugger;
     return (
@@ -30,15 +30,15 @@ const DisplayTicketDetailModal = props => {
             <p>Name : {name}</p>
             <p>Vehicle : {vehicle}</p>
             <p>Start Date : {`${date.toDateString()} [ ${date.toLocaleTimeString()} ]`}</p>
-            <p>Slot : {`${group}- ${num}`}</p>
+            <p>Slot : {`${num}`}</p>
             {!isUndefined(props.ticket.finishTime) && <p>End Date : {`${date.toDateString()} [ ${date.toLocaleTimeString()} ]    `}</p>}
             {!isUndefined(props.ticket.price) && <p>Price : {props.ticket.price}</p>}
         </Modal.Content>
         {isUndefined(props.ticket.price) && <Modal.Actions>
-            <Button color='red' onClick={() => props.cancelTicketAction({id, group, num})}>
+            <Button color='red' onClick={() => props.cancelTicketAction({id, num})}>
             <Icon name='remove' /> cancel
             </Button>
-            <Button color='green' onClick={()=>props.endTicketAction({id, group, num})}>
+            <Button color='green' onClick={()=>props.endTicketAction({id, num})}>
             <Icon name='checkmark' /> Complete
             </Button>
         </Modal.Actions>}

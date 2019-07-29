@@ -1,16 +1,16 @@
 import { BOOK_SLOT, CANCEL_SLOT } from "../../../Utils/StringConst";
 
-export const BookSlotAction = ({group, num}) => dispatch => {
+export const BookSlotAction = ({num}) => dispatch => {
     debugger;
     dispatch({
         type : BOOK_SLOT,
-        payLoad : {group, num}
+        payLoad : {num}
     })
 }
 
-export const CancelSlotAction = ({group, num}) => dispatch => {
+export const CancelSlotAction = ({num}) => dispatch => {
     dispatch( {
         type : CANCEL_SLOT,
-        payLoad : {group, num}
+        payLoad : {num}
     })
 }

@@ -88,7 +88,7 @@ const validate = (formData) => {
 
 const mapStateToProps = store => {
     return {
-        tickets : values(store.active).map( ticket => ticket.vehicle),
+        tickets : values(store.active).filter(ticket => ticket.status === 1).map( ticket => ticket.vehicle),
     }
 }
 export default reduxForm({
