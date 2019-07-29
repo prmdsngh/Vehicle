@@ -9,13 +9,14 @@ const DisplaySlot = props => {
     return ( 
         <Container>
             <Segment inverted color='blue'>Slots</Segment>
-            <Grid relaxed stretched>
-                {   
-                    keys(slots).map((slotId, i) => {
-                    return <DisplaySlotItem key = {`slot_${i}`} item={slots[slotId]} />
-                    })
-                }
+            <Grid columns={10} stretched>
+                        {
+                            keys(slots).map((slotId, i) => {
+                            return <DisplaySlotItem key = {`slot_${i}`} item={slots[slotId]} />
+                            })
+                        }
             </Grid>
+            
         </Container>
         
     )
